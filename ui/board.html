@@ -96,8 +96,9 @@
 <body ng-app="myApp" ng-init="user={'name':'tonylui'}">
 <div ng-controller="messagesCtrl">
     <div ng-repeat="message in messageJSON">
-        <div draggable ng-model="message" style="background-color: aqua;width: 100px; height: 100px">
-            <textarea messageta >{{message.message}}</textarea>
+        <!--<div draggable dragmodel="message">-->
+        <div draggable ng-model="dragmodel">
+            <textarea ng-model="message.message" ng-keyup="persistTextAreaText(message)"></textarea>
         </div>
     </div>
 </div>

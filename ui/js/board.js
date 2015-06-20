@@ -6,18 +6,34 @@ var SERVER_URL = "http://52.74.226.158:3000";
 
 var app = angular.module('myApp', ['freeDragger']);
 
-function persistTextAreaText(text) {
-    console.log("a");
-    //scope.messageJSON
-}
-
-
 app.controller('messagesCtrl', function ($scope, $http) {
-    $http.get(SERVER_URL+"/user/" + $scope.user.name + "/notes")
+    var username = "/user/" + $scope.user.name;
+    var api = "/notes";
+    $http.get(SERVER_URL + username + api)
         .success(function (response) {
             $scope.messageJSON = response;
+            //$scope.messageJSON = [{"_id":"55850ff9bcfbd5610e04f4f5","message":"123","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T12:38:45.201Z","isPublic":false,"__v":0,"width":100,"height":100,"z":10,"y":10,"x":10}];
         });
-    //$scope.messageJSON = [{"_id":"55850ff9bcfbd5610e04f4f5","message":"Hello Hackathon..some adjustment updated","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T07:02:17.210Z","isPublic":false,"__v":0},{"_id":"55850ffabcfbd5610e04f4f6","message":"Hello Hackathon..some adjustment updated","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T07:02:18.879Z","isPublic":false,"__v":0},{"_id":"55850ffbbcfbd5610e04f4f7","message":"Hello Hackathon..some adjustment updated","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T07:02:19.742Z","isPublic":false,"__v":0},{"_id":"55850ffbbcfbd5610e04f4f8","message":"Hello Hackathon..some adjustment updated","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T07:02:19.917Z","isPublic":false,"__v":0},{"_id":"55850ffcbcfbd5610e04f4f9","message":"Hello Hackathon..some adjustment updated","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T07:02:20.075Z","isPublic":false,"__v":0},{"_id":"55850ffcbcfbd5610e04f4fa","message":"Hello Hackathon..some adjustment updated","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T07:02:20.229Z","isPublic":false,"__v":0},{"_id":"55850ffcbcfbd5610e04f4fb","message":"Hello Hackathon..some adjustment updated","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T07:02:20.394Z","isPublic":false,"__v":0},{"_id":"55850ffcbcfbd5610e04f4fc","message":"Hello Hackathon..some adjustment updated","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T07:02:20.552Z","isPublic":false,"__v":0}];
-    $scope.persist = persistTextAreaText;
+    //persistTextAreaText(element.val());
+    function persistTextAreaTextBak(text) {
+        console.log(text);
+        //scope.messageJSON
+    }
+
+    $scope.persistTextAreaText = function (message) {
+        console.log(message._id);
+        console.log(message.message);
+
+        var api = "/" + message._id;
+        $http.put(SERVER_URL + username + api, {"message": message.message,"x": message.x,"y": message.y,"z": message.z,"width": message.width,"height": message.height})
+            .success(function (response) {
+                console.log("updated");
+            })
+            .error(function (response){
+                console.log("failed");
+            });
+
+        $http.put(SERVER_URL + "/user/" + $scope.user.name + "/notes")
+    };
 
 });
