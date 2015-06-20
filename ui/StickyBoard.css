@@ -29,3 +29,30 @@ p {
 body {
 	background-color: blue;
 }
+
+.stickynote {
+    text-decoration:none;
+    color:#000;
+    background:#ffc;
+    display:block;
+    height:150px;
+    width:150px;
+    padding:10px;
+    /* Firefox */
+    -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+    /* Safari+Chrome */
+    -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+    /* Opera */
+    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+}
+
+.stickytext {
+
+    font-family:"Reenie Beanie",arial,sans-serif;
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
+    width: 130px;
+    height: 130px;
+
+}

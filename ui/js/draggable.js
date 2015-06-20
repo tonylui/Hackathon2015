@@ -10,8 +10,6 @@ freeDraggerModule.directive('draggable', ['$document', function ($document) {
 
             element.css({
                 position: 'absolute',
-                border: '1px solid red',
-                backgroundColor: 'lightgrey',
                 cursor: 'pointer',
                 width: scope.message.width + 'px',
                 height: scope.message.height + 'px',
