@@ -6,20 +6,23 @@
 
     <!-- AngularJS-->
     <script src="js/angular_1_3_15.min.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="StickyBoard.css"/>
 
-    <link rel="stylesheet" href="StickyBoard.css">
     <!-- Bootstrap -->
     <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+
 
     <script src="js/board.js"></script>
     <script src="js/draggable.js"></script>
 
-    <script src="/js/facebook.functions.js"></script>
+    <script src="js/facebook.functions.js"></script>
     <div id="list_of_friends"></div>
     <div style="display:none" id="list_of_friend_names"></div>
 
@@ -80,13 +83,15 @@
             </div>
             <div>
                 <ul class="nav navbar-nav">
-                    <li><a href="#" ng-click="addNewNote()" ><span class="glyphicon glyphicon-file"></span> Stick It</a></li>
+                    <li><a href="#" ng-click="addNewNote()"><span class="glyphicon glyphicon-file"></span> Stick It</a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
 
                         <form id="search_form" action="/search" method="get">
-                            <input id="search_input" onkeypress="updateSearchOptions(event)" type="text" class="form-group"
+                            <input id="search_input" onkeypress="updateSearchOptions(event)" type="text"
+                                   class="form-group"
                                    name="q" placeholder="Search Here"/>
                         </form>
 
