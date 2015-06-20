@@ -80,7 +80,7 @@
 			var friend_names = '';
 	    	for (var i = 0; i < friend_data.length; i++) {
 	    	       results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '/picture">' + friend_data[i].name + '</div>';
-				   friend_names += '<div id=\'name_\''i'>' + friend_data[i].name + '</div>'
+				   friend_names += '<div id=\'name_\''+i+'>' + friend_data[i].name + '</div>'
 	    	}
 	        list_of_friend_names.innerHTML = '<h2>List of friend names</h2>' + friend_names;
 
