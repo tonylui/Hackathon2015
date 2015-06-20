@@ -79,13 +79,18 @@ var loginFunction;
 
 
 app.controller('messagesCtrl', function ($scope, $http) {
+	loginFunction = function(){
     var username = "/user/" + $scope.user.name;
     var api = "/notes";
     $http.get(SERVER_URL + username + api)
         .success(function (response) {
             $scope.messageJSON = response;
+            
             //$scope.messageJSON = [{"_id":"55850ff9bcfbd5610e04f4f5","message":"123","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T12:38:45.201Z","isPublic":false,"__v":0,"width":100,"height":100,"z":10,"y":10,"x":10}];
         });
+	};
+	
+	setUpFaceBookLogin();
 
     $scope.addNewNote = function(){
         var message = {
