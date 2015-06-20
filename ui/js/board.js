@@ -28,6 +28,8 @@ var persistMessage = function (message) {
         });
 };
 
+var dict_commit_intervals={};
+
 app.controller('messagesCtrl', function ($scope, $http) {
     var username = "/user/" + $scope.user.name;
     var api = "/notes";
@@ -38,24 +40,38 @@ app.controller('messagesCtrl', function ($scope, $http) {
         });
 
     $scope.persistMessage = function (message) {
-        console.log(message._id);
-        console.log(message.message);
+        clearInterval(dict_commit_intervals[message._id]);
+        dict_commit_intervals[message._id]=setInterval(commitRequest, 5000);
 
-        var api = "/" + message._id;
-        $http.put(SERVER_URL + username + api, {
-            "message": message.message,
-            "x": message.x,
-            "y": message.y,
-            "z": message.z,
-            "width": message.width,
-            "height": message.height
-        })
-            .success(function (response) {
-                console.log("updated");
+        // Closure example
+        /*setInterval(function(param){
+            return function(){
+                console.log(param);
+            };
+        }("hello"), 5000);*/
+
+        function commitRequest() {
+            console.log(message._id);
+            console.log(message.message);
+            var api = "/" + message._id;
+            $http.put(SERVER_URL + username + api, {
+                "message": message.message,
+                "x": message.x,
+                "y": message.y,
+                "z": message.z,
+                "width": message.width,
+                "height": message.height
             })
-            .error(function (response) {
-                console.log("failed");
-            });
+                .success(function (response) {
+                    console.log("updated");
+                    clearInterval(dict_commit_intervals[message._id]);
+                    console.log("interval stopped");
+                })
+                .error(function (response) {
+                    console.log("failed");
+                });
+        }
+
     };
 
 });

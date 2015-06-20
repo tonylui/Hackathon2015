@@ -153,7 +153,6 @@
         <div class="jumbotron">
 			<div ng-controller="messagesCtrl">
 				<div ng-repeat="message in messageJSON">
-					<!--<div draggable dragmodel="message">-->
 					<div draggable ng-model="dragmodel" >
 						<textarea ng-model="message.message" ng-keyup="persistMessage(message)"></textarea>
 					</div>
