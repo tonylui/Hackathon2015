@@ -28,7 +28,55 @@ var persistMessage = function (message) {
         });
 };
 
-var dict_commit_intervals={};
+var dict_commit_intervals = {};
+var delayBeforeCommit = 1000;
+
+//app.controller('messagesCtrl', function ($scope, $http) {});
+
+function setUpFaceBookLogin(){
+    function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+            updateUserInfo();
+            updateFriendInfo();
+        } else if (response.status === 'not_authorized') {
+
+            document.getElementById('status').innerHTML = 'Please log into this app.';
+        } else {
+            document.getElementById('status').innerHTML = 'Please log into Facebook.';
+        }
+    }
+
+    function checkLoginState() {
+        FB.getLoginStatus(function (response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1450937555212722',
+            status: true,
+            cookie: true,
+            xfbml: true,
+            oauth: true,
+            version: 'v2.3'
+        });
+        FB.getLoginStatus(statusChangeCallback);
+        FB.Event.subscribe('auth.statusChange', statusChangeCallback);
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+}
+
+var loginFunction;
+
 
 app.controller('messagesCtrl', function ($scope, $http) {
     var username = "/user/" + $scope.user.name;
@@ -67,7 +115,7 @@ app.controller('messagesCtrl', function ($scope, $http) {
 
     $scope.persistMessage = function (message) {
         clearInterval(dict_commit_intervals[message._id]);
-        dict_commit_intervals[message._id]=setInterval(commitRequest, 1000);
+        dict_commit_intervals[message._id]=setInterval(commitRequest, 5000);
 
         function commitRequest() {
             console.log(message._id);
@@ -94,3 +142,15 @@ app.controller('messagesCtrl', function ($scope, $http) {
     };
 
 });
+
+function setUpMessageController(userid) {
+    $("#noteBoard").html(
+        '<div ng-controller="messagesCtrl">' +
+        '<div ng-repeat="message in messageJSON">' +
+        '<div draggable>' +
+        '<textarea ng-model="message.message" ng-keyup="persistMessage(message)"></textarea>' +
+        '</div>' +
+        '</div>' +
+        '</div>'
+    );
+}
