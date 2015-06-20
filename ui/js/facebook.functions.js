@@ -4,6 +4,7 @@ function updateUserInfo() {
 		    FB.api('/me', function(response) {
 		      console.log('Successful login for: ' + response.name);
 			  userInfo.innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name;
+			  loginFunction(response.id);
 		      document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
 		    });
 	  }
@@ -21,6 +22,7 @@ function updateUserInfo() {
 	     	});
     }
  function updateSearchOptions(event){
+	 console.log(event.which);
 	 var key=event.which;
 	 var search_form = document.getElementById('search_form');
 	 var search_input = document.getElementById('search_input');
