@@ -4,19 +4,26 @@
     <meta charset="UTF-8">
     <title></title>
 
+    <!-- AngularJS-->
+    <script src="js/angular_1_3_15.min.js"></script>
+
+    <script src="js/board.js"></script>
+    <script src="js/draggable.js"></script>
+
     <!-- Bootstrap -->
     <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<div>
-
+<body ng-app="myApp" ng-init="user={'name':'tonylui'}">
+<div ng-controller="messagesCtrl">
+    <div ng-repeat="message in messageJSON">
+        <div draggable style="background-color: aqua;width: 100px; height: 100px"><textarea>{{message.message}}</textarea></div>
+    </div>
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-1.11.3.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
-<!-- AngularJS-->
-<script src="js/angular_1_3_15.min.js"></script>
+
 </body>
 </html>
