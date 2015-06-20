@@ -43,13 +43,6 @@ app.controller('messagesCtrl', function ($scope, $http) {
         clearInterval(dict_commit_intervals[message._id]);
         dict_commit_intervals[message._id]=setInterval(commitRequest, 5000);
 
-        // Closure example
-        /*setInterval(function(param){
-            return function(){
-                console.log(param);
-            };
-        }("hello"), 5000);*/
-
         function commitRequest() {
             console.log(message._id);
             console.log(message.message);
