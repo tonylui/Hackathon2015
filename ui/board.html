@@ -23,8 +23,8 @@
           status: true,
           cookie: true,
           xfbml: true,
-          oauth: true
-          version    : 'v2.3'
+          oauth: true,
+          version : 'v2.3'
         });
         FB.getLoginStatus(updateButton);
         FB.Event.subscribe('auth.statusChange', updateButton); 
@@ -101,7 +101,7 @@
         </div>
     </div>
 </div>
-<button id='fb-auth' onclick="myFacebookLogin()">Login with Facebook</button>
+<button id='fb-auth'>Login with Facebook</button>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-1.11.3.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
