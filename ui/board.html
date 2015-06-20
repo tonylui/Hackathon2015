@@ -9,7 +9,9 @@
 
     <script src="js/board.js"></script>
     <script src="js/draggable.js"></script>
-
+	<div id="user-info"></div>
+	<div id="list_of_friends"></div>
+	
     <!-- Bootstrap -->
     <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
     
@@ -17,9 +19,14 @@
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '1450937555212722',
-          xfbml      : true,
+          status: true,
+          cookie: true,
+          xfbml: true,
+          oauth: true
           version    : 'v2.3'
         });
+        FB.getLoginStatus(updateButton);
+        FB.Event.subscribe('auth.statusChange', updateButton); 
       };
 
       (function(d, s, id){
@@ -29,9 +36,53 @@
          js.src = "https://connect.facebook.net/ro_RO/sdk.js";
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));    
-    function myFacebookLogin() {
-    	  FB.login(function(){}, {scope: 'publish_actions'});
+      
+      
+    function updateButton(response){
+    	
+    	if (response.authResponse) {    		
+    		updateUserInfo();
+    		updateFriendInfo();
+    		
+    	} else {
+    		dysplayLoginButton();
     	}
+    
+    }
+    function updateFriendInfo(){
+	    FB.api('/me/friends?limit=<?= $iLimit ?>', function(response) {
+	    	var result_holder = document.getElementById('result_friends');
+	    	var friend_data = response.data.sort(sortMethod);
+	    	 
+	    	for (var i = 0; i < friend_data.length; i++) {
+	    	       results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '/picture">' + friend_data[i].name + '</div>';
+	    	}
+	        result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
+	    	});
+	    	button.onclick = function() {
+	    		FB.logout(function(response) {
+	    			window.location.reload();
+	    		});
+	    	};
+    }
+    function updateUserInfo(){
+    	var button = document.getElementById('fb-auth');
+    	var userInfo = document.getElementById('user-info');
+	    FB.api('/me', function(response) {
+    	    userInfo.innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name;
+    		button.innerHTML = 'Logout';
+		});
+    }
+    function displayLoginButton(){
+    	var button = document.getElementById('fb-auth');
+    	button.onclick = function() {
+        	FB.login(function(response) {
+        		if (response.authResponse) {
+        			window.location.reload();
+        		}
+        	}, {scope:'email'});
+        }
+    }
     </script>
     
 </head>
@@ -41,7 +92,7 @@
         <div draggable style="background-color: aqua;width: 100px; height: 100px"><textarea>{{message.message}}</textarea></div>
     </div>
 </div>
-<button onclick="myFacebookLogin()">Login with Facebook</button>
+<button id='fb-auth' onclick="myFacebookLogin()">Login with Facebook</button>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-1.11.3.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
