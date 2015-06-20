@@ -25,7 +25,6 @@ function updateUserInfo() {
 	    	});
     }
  function updateSearchOptions(event){
-	 alert(event.which);
 	 var key=event.which;
 	 var search_form = document.getElementById('search_form');
 	 var search_input = document.getElementById('search_input');
