@@ -28,44 +28,48 @@ var persistMessage = function (message) {
         });
 };
 
-var dict_commit_intervals={};
+var dict_commit_intervals = {};
 var delayBeforeCommit = 2000;
+app.controller('messagesCtrl', function ($scope, $http) {});
 
-app.controller('messagesCtrl', function ($scope, $http) {
-    var username = "/user/" + $scope.user.name;
-    var api = "/notes";
-    $http.get(SERVER_URL + username + api)
-        .success(function (response) {
-            $scope.messageJSON = response;
-            //$scope.messageJSON = [{"_id":"55850ff9bcfbd5610e04f4f5","message":"123","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T12:38:45.201Z","isPublic":false,"__v":0,"width":100,"height":100,"z":10,"y":10,"x":10}];
-        });
+function setUpMessageController(userid) {
+    app.controller('messagesCtrl', function ($scope, $http) {
+        //var username = "/user/" + $scope.user.name;
+        username = "/user/" + userid;
+        var api = "/notes";
+        $http.get(SERVER_URL + username + api)
+            .success(function (response) {
+                $scope.messageJSON = response;
+                //$scope.messageJSON = [{"_id":"55850ff9bcfbd5610e04f4f5","message":"123","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T12:38:45.201Z","isPublic":false,"__v":0,"width":100,"height":100,"z":10,"y":10,"x":10}];
+            });
 
-    $scope.persistMessage = function (message) {
-        clearInterval(dict_commit_intervals[message._id]);
-        dict_commit_intervals[message._id]=setInterval(commitRequest, delayBeforeCommit);
+        $scope.persistMessage = function (message) {
+            clearInterval(dict_commit_intervals[message._id]);
+            dict_commit_intervals[message._id] = setInterval(commitRequest, delayBeforeCommit);
 
-        function commitRequest() {
-            console.log(message._id);
-            console.log(message.message);
-            var api = "/" + message._id;
-            $http.put(SERVER_URL + username + api, {
-                "message": message.message,
-                "x": message.x,
-                "y": message.y,
-                "z": message.z,
-                "width": message.width,
-                "height": message.height
-            })
-                .success(function (response) {
-                    console.log("updated");
-                    clearInterval(dict_commit_intervals[message._id]);
-                    console.log("interval stopped");
+            function commitRequest() {
+                console.log(message._id);
+                console.log(message.message);
+                var api = "/" + message._id;
+                $http.put(SERVER_URL + username + api, {
+                    "message": message.message,
+                    "x": message.x,
+                    "y": message.y,
+                    "z": message.z,
+                    "width": message.width,
+                    "height": message.height
                 })
-                .error(function (response) {
-                    console.log("failed");
-                });
-        }
+                    .success(function (response) {
+                        console.log("updated");
+                        clearInterval(dict_commit_intervals[message._id]);
+                        console.log("interval stopped");
+                    })
+                    .error(function (response) {
+                        console.log("failed");
+                    });
+            }
 
-    };
+        };
 
-});
+    });
+}
