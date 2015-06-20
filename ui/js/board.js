@@ -29,6 +29,7 @@ var persistMessage = function (message) {
 };
 
 var dict_commit_intervals={};
+var delayBeforeCommit = 2000;
 
 app.controller('messagesCtrl', function ($scope, $http) {
     var username = "/user/" + $scope.user.name;
@@ -41,7 +42,7 @@ app.controller('messagesCtrl', function ($scope, $http) {
 
     $scope.persistMessage = function (message) {
         clearInterval(dict_commit_intervals[message._id]);
-        dict_commit_intervals[message._id]=setInterval(commitRequest, 5000);
+        dict_commit_intervals[message._id]=setInterval(commitRequest, delayBeforeCommit);
 
         function commitRequest() {
             console.log(message._id);
