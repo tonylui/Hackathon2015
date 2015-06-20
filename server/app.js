@@ -1,3 +1,4 @@
+var config = require("./config.js");
 var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer');
@@ -71,24 +72,59 @@ app.delete('/user/:username/:id', function (req, res) {
     });
 });
 
+
+app.get('/user', function(req,res){
+
+    User.find({},function(err, data){
+        res.send(data);
+    });
+
+});
+
+app.post('/user', function(req,res){
+    var username = req.body.username;
+    var facebookId = req.body.facebookId;
+
+    User.find({username: username})
+
+    new User({
+        username:username,
+        facebookId:facebookId
+    })
+
+});
+
 app.listen(3000);
 
 //DB part
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/stickyboard');
+mongoose.connect('mongodb://'+config.dbhost+'/stickyboard');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     console.log('connect to database successfully');
 });
 
+//Note schema
 var noteSchema = mongoose.Schema({
     message: String,
     username: String,
     byUser: String,
     lastUpdate: Date,
-    isPublic: Boolean
+    isPublic: Boolean,
+    x: Number,
+    y: Number,
+    z: Number,
+    height: Number,
+    width: Number
 });
 
 var Note = mongoose.model('Note', noteSchema);
 
+//User schema
+var userSchema = mongoose.Schema({
+    username: String,
+    facebookId: String
+});
+
+var User = mongoose.model('User', userSchema);
