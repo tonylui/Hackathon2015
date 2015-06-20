@@ -9,7 +9,7 @@ function updateUserInfo() {
 		    });
 	  }
   function updateFriendInfo(){
-	    FB.api('/me/friends?limit=<?= $iLimit ?>', function(response) {
+	    FB.api('/me/friends', function(response) {
 	    	var list_of_friends = document.getElementById('list_of_friends');
 
 	    	var friend_data = response.data;
