@@ -1,0 +1,22 @@
+.container-fluid {
+	background-color: #abdfe8;
+}
+
+.navbar-borderline {
+
+	border-bottom: 0px solid #12464F;
+}
+
+.form-group {
+	margin-top:9px;
+	margin-bottom:9px;
+	border-radius:4px;
+}
+
+p {
+	color: red;
+}
+
+body {
+	background-color: blue;
+}
