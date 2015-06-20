@@ -84,19 +84,19 @@
     	 alert(event.which);
     	 var key=event.which;
     	 var search_input = document.getElementById('search_input');
-    	 var options[] = getListOfOptions(search_input.value+key);
+    	 var options = getListOfOptions(search_input.value+key);
     	 var select_options = document.getElementById('select_options');
     	 select_options.tyle.visibility = "visible";
     	 for (var i = 0; i < options.length; i++){
     		 var option = new Option(options[i], options[i]);
     		 select_options.options[daySelect.options.length] = option;
      	 }
-    	 select_options.onchange="updateSearchInput("+select_options.[select_options.selectedIndex].text")";
+    	 select_options.onchange="updateSearchInput("+select_options[select_options.selectedIndex].text+")";
     	 
      }   
      function getListOfOptions(match){
-    	 var list_of_friends[] = document.getElementById('list_of_friends');
-    	 var result[] = [];
+    	 var list_of_friends = document.getElementById('list_of_friends');
+    	 var result = [];
     	 for (var i = 0; i < list_of_friends.length; i++){
     		 if (list_of_friends[i].contains(match)){
     			 result[result.length] = list_of_friends[i];
@@ -148,11 +148,6 @@
         </div>
 
         <div class="jumbotron">
-<<<<<<< HEAD
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
-=======
 			<div ng-controller="messagesCtrl">
 				<div ng-repeat="message in messageJSON">
 					<div draggable ng-model="dragmodel" >
@@ -160,28 +155,6 @@
 					</div>
 				</div>
 			</div>
->>>>>>> 01b37e65ea75163234d79046508fd326e6ea8c8c
-        </div>
-
-        <div class="jumbotron">
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
-        </div>
-        <div class="jumbotron">
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
-        </div>
-        <div class="jumbotron">
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
-        </div>
-        <div class="jumbotron">
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
         </div>
 
     </div>    
