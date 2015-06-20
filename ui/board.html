@@ -38,7 +38,9 @@
 <body ng-app="myApp" ng-init="user={'name':'tonylui'}">
 <div ng-controller="messagesCtrl">
     <div ng-repeat="message in messageJSON">
-        <div draggable style="background-color: aqua;width: 100px; height: 100px"><textarea>{{message.message}}</textarea></div>
+        <div draggable ng-model="message" style="background-color: aqua;width: 100px; height: 100px">
+            <textarea messageta ">{{message.message}}</textarea>
+        </div>
     </div>
 </div>
 <button onclick="myFacebookLogin()">Login with Facebook</button>
