@@ -85,6 +85,9 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
+                        <div id="user-info"></div>
+                    </li>
+                    <li>
                         <form id="search_form2" action="/search" method="get">
                             <input ng-model="searchText" type="text" class="form-group"
                                    name="q" placeholder="Search Notes"></label>
@@ -98,7 +101,6 @@
                                    name="q" placeholder="Search Friends"/>
                             <div class="fb-login-button" id="user-logo" data-max-rows="1" data-size="medium"
                                  data-show-faces="false" data-auto-logout-link="true"></div>
-                            <div id="user-info"></div>
                         </form>
                     </li>
                 </ul>
