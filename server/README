@@ -1,0 +1,3 @@
+after checking out the code, run the following command to install dependencies:
+npm install
+
