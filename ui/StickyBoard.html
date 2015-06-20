@@ -6,7 +6,11 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <meta charset="utf-8">
+
+	<script src="js/board.js"></script>
+	<script src="js/draggable.js"></script>
+
+	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <div id="user-info"></div>
@@ -87,9 +91,8 @@
 
 
 </head>
-<body>
-    <div ng-app="", ng-controller="">
-        
+<body ng-app="myApp" ng-init="user={'name':'tonylui'}">
+    <div >
 
         <div class="container-fluid">
             <div class="navbar-header">
@@ -121,31 +124,16 @@
         </div>
 
         <div class="jumbotron">
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
+			<div ng-controller="messagesCtrl">
+				<div ng-repeat="message in messageJSON">
+					<!--<div draggable dragmodel="message">-->
+					<div draggable ng-model="dragmodel" >
+						<textarea ng-model="message.message" ng-keyup="persistMessage(message)"></textarea>
+					</div>
+				</div>
+			</div>
         </div>
 
-        <div class="jumbotron">
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
-        </div>
-        <div class="jumbotron">
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
-        </div>
-        <div class="jumbotron">
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
-        </div>
-        <div class="jumbotron">
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
-        </div>
 
     </div>    
 </body>
