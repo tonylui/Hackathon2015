@@ -118,7 +118,7 @@ app.listen(3000);
 
 //DB part
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://'+config.dbhost+'/stickyboard');
+mongoose.connect('mongodb://'+config.dbhost+':'+config.dbPort+'/stickyboard');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
