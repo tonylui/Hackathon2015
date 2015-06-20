@@ -1,5 +1,7 @@
 .container-fluid {
-	background-color: #abdfe8;
+	background-color: #12464F;
+    opacity: 0.9;
+    filter: alpha(opacity=90); /* For IE8 and earlier */
 }
 
 .navbar-borderline {
@@ -20,10 +22,6 @@
 	border-radius: 20px;
     height: 150px;
     width: 150px;
-}
-
-p {
-	color: red;
 }
 
 body {
