@@ -67,7 +67,7 @@ app.controller('messagesCtrl', function ($scope, $http) {
 
     $scope.persistMessage = function (message) {
         clearInterval(dict_commit_intervals[message._id]);
-        dict_commit_intervals[message._id]=setInterval(commitRequest, 5000);
+        dict_commit_intervals[message._id]=setInterval(commitRequest, 1000);
 
         function commitRequest() {
             console.log(message._id);
