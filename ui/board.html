@@ -11,6 +11,7 @@
     <script src="js/draggable.js"></script>
 	<div id="user-info"></div>
 	<div id="list_of_friends"></div>
+	<div style = "display:none" id="list_of_friend_names"></div>
 	
     <!-- Bootstrap -->
     <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -52,11 +53,17 @@
     function updateFriendInfo(){
 	    FB.api('/me/friends?limit=<?= $iLimit ?>', function(response) {
 	    	var result_holder = document.getElementById('result_friends');
+	    	var list_of_friend_names = document.getElementById('list_of_friend_names');
+
 	    	var friend_data = response.data.sort(sortMethod);
-	    	 
+	    	var results = '';
+			var friend_names = '';
 	    	for (var i = 0; i < friend_data.length; i++) {
 	    	       results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '/picture">' + friend_data[i].name + '</div>';
+				   friend_names += '<div id=\'name_\''i'>' + friend_data[i].name + '</div>'
 	    	}
+	        list_of_friend_names.innerHTML = '<h2>List of friend names</h2>' + friend_names;
+
 	        result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
 	    	});
 	    	button.onclick = function() {
