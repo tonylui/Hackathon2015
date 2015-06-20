@@ -15,10 +15,11 @@ function updateUserInfo() {
 	    	var friend_data = response.data;
 	    	var friend_names = '';
 	    	for (var i = 0; i < friend_data.length; i++) {
-	    		friend_names += '<div id=\'name_\''+i+'>' + friend_data[i].name + '</div>'
+	    		friend_names += "<div id='name_'"+i+"'>" + friend_data[i].name + "</div>";
 	    	}
 	        list_of_friends.innerHTML = '<h2>List of friend names</h2>' + friend_names;
-
+	        console.log(response.data);
+	        console.log(friend_names);
 	     	});
     }
  function updateSearchOptions(event){
