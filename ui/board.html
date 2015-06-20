@@ -18,7 +18,27 @@
     <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
     
     <script>
-      window.fbAsyncInit = function() {
+      
+	function statusChangeCallback(response) {
+     
+    if (response.status === 'connected') {
+      updateUserInfo();
+	  updateFriendInfo();
+    } else if (response.status === 'not_authorized') {
+      
+      document.getElementById('status').innerHTML = 'Please log into this app.';
+    } else {
+       document.getElementById('status').innerHTML = 'Please log into Facebook.';
+    }
+  }
+
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
         FB.init({
           appId      : '1450937555212722',
           status: true,
@@ -27,31 +47,30 @@
           oauth: true,
           version : 'v2.3'
         });
-        FB.getLoginStatus(updateButton);
-        FB.Event.subscribe('auth.statusChange', updateButton); 
+        FB.getLoginStatus(statusChangeCallback);
+        FB.Event.subscribe('auth.statusChange', statusChangeCallback); 
       };
 
-      (function(d, s, id){
-    	 var js, fjs = d.getElementsByTagName(s)[0];         
-         if (d.getElementById(id)) return;
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));    
-      
-      
-    function updateButton(response){
-    	
-    	if (response.authResponse) {
-			updateUserInfo();
-    		updateFriendInfo();    		
-    	} else {
-    		dysplayLoginButton();
-    	}
-    
-    }
-   
-    function updateFriendInfo(){
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+   function updateUserInfo() {
+		var button = document.getElementById('fb-auth');
+    	var userInfo = document.getElementById('user-info');
+	    console.log('Welcome!  Fetching your information.... ');
+	    FB.api('/me', function(response) {
+	      console.log('Successful login for: ' + response.name);
+		  userInfo.innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name;
+	      document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+		  button.innerHTML = 'Logout';
+	    });
+  }
+  function updateFriendInfo(){
 	    FB.api('/me/friends?limit=<?= $iLimit ?>', function(response) {
 	    	var result_holder = document.getElementById('result_friends');
 	    	var list_of_friend_names = document.getElementById('list_of_friend_names');
@@ -67,30 +86,9 @@
 
 	        result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
 	    	});
-	    	button.onclick = function() {
-	    		FB.logout(function(response) {
-	    			window.location.reload();
-	    		});
-	    	};
+	    	
     }
-    function updateUserInfo(){
-    	var button = document.getElementById('fb-auth');
-    	var userInfo = document.getElementById('user-info');
-	    FB.api('/me', function(response) {
-    	    userInfo.innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name;
-    		button.innerHTML = 'Logout';
-		});
-    }
-    function displayLoginButton(){
-    	var button = document.getElementById('fb-auth');
-    	button.onclick = function() {
-        	FB.login(function(response) {
-        		if (response.authResponse) {
-        			window.location.reload();
-        		}
-        	}, {scope:'email'});
-        }
-    }
+        
     </script>
     
 </head>
