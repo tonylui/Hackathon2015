@@ -148,9 +148,19 @@
         </div>
 
         <div class="jumbotron">
+<<<<<<< HEAD
                 <div class="container">
                     <h1>Hello, world!</h1>
                 </div>
+=======
+			<div ng-controller="messagesCtrl">
+				<div ng-repeat="message in messageJSON">
+					<div draggable ng-model="dragmodel" >
+						<textarea ng-model="message.message" ng-keyup="persistMessage(message)"></textarea>
+					</div>
+				</div>
+			</div>
+>>>>>>> 01b37e65ea75163234d79046508fd326e6ea8c8c
         </div>
 
         <div class="jumbotron">
