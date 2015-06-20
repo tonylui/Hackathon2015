@@ -9,20 +9,16 @@ function updateUserInfo() {
 	  }
   function updateFriendInfo(){
 	    FB.api('/me/friends?limit=<?= $iLimit ?>', function(response) {
-	    	var result_holder = document.getElementById('result_friends');
 	    	var list_of_friends = document.getElementById('list_of_friends');
 
 	    	var friend_data = response.data;
-	    	var results = '';
-			var friend_names = '';
+	    	var friend_names = '';
 	    	for (var i = 0; i < friend_data.length; i++) {
-	    	       results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '/picture">' + friend_data[i].name + '</div>';
-				   friend_names += '<div id=\'name_\''+i+'>' + friend_data[i].name + '</div>'
+	    		friend_names += '<div id=\'name_\''+i+'>' + friend_data[i].name + '</div>'
 	    	}
-	        list_of_friend.innerHTML = '<h2>List of friend names</h2>' + friend_names;
+	        list_of_friends.innerHTML = '<h2>List of friend names</h2>' + friend_names;
 
-	        result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
-	    	});
+	     	});
     }
  function updateSearchOptions(event){
 	 var key=event.which;
