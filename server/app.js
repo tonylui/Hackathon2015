@@ -48,6 +48,11 @@ app.get('/user/:username/notes', function (req, res) {
 app.post('/user/:username/notes', function (req, res) {
     var username = req.params.username;
     var message = req.body.message;
+    var x = req.body.x;
+    var y = req.body.y;
+    var z = req.body.z;
+    var height = req.body.height;
+    var width = req.body.width;
 
     //TODO authorization to be done here...
     new Note({
@@ -55,7 +60,12 @@ app.post('/user/:username/notes', function (req, res) {
         username: username,
         byUser: username, //TODO fix this to allow adding by other user...
         lastUpdate: Date.now(),
-        isPublic: false
+        isPublic: false,
+        x: x,
+        y: y,
+        z: z,
+        height: height,
+        width: width
     }).save(function (err, data) {
             if (err) return console.error(err);
 
@@ -68,12 +78,23 @@ app.put('/user/:username/:id', function (req, res) {
     var username = req.params.username;
     var id = req.params.id;
     var message = req.body.message;
+    var x = req.body.x;
+    var y = req.body.y;
+    var z = req.body.z;
+    var height = req.body.height;
+    var width = req.body.width;
 
     Note.update({
         username: username,
         _id: id
     }, {
-        message: message
+        message: message,
+        x: x,
+        y: y,
+        z: z,
+        height: height,
+        width: width,
+        lastUpdate: Date.now()
     }, function (err, data) {
         if (err) return console.error(err);
 
