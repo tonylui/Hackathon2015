@@ -43,22 +43,14 @@
     function updateButton(response){
     	
     	if (response.authResponse) {
-			updateProfilePicture();    		
-    		updateUserInfo();
+			updateUserInfo();
     		updateFriendInfo();    		
     	} else {
     		dysplayLoginButton();
     	}
     
     }
-   function updateProfilePicture(){
-	FB.api('/me/picture', function(response) {
-		  var list_of_friend_names = document.getElementById('user-logo');
-		  var my_picture = '<div><img src="https://graph.facebook.com/' + response.data.id + '/picture"></div>';		
-		  list_of_friend_names.innerHTML = my_picture;
-		}
-	}
-
+   
     function updateFriendInfo(){
 	    FB.api('/me/friends?limit=<?= $iLimit ?>', function(response) {
 	    	var result_holder = document.getElementById('result_friends');
