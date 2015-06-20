@@ -39,6 +39,32 @@ app.controller('messagesCtrl', function ($scope, $http) {
             //$scope.messageJSON = [{"_id":"55850ff9bcfbd5610e04f4f5","message":"123","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T12:38:45.201Z","isPublic":false,"__v":0,"width":100,"height":100,"z":10,"y":10,"x":10}];
         });
 
+    $scope.addNewNote = function(){
+        var message = {
+            "message": "Write some note",
+            "x" : 200,
+            "y" : 200,
+            "z": 200,
+            "width": 200,
+            "height": 200
+        };
+
+        $http.post(SERVER_URL + username + api, message)
+            .success(function (response) {
+                console.log("added a new note");
+                $http.get(SERVER_URL + username + api)
+                    .success(function (response) {
+                        $scope.messageJSON = response;
+                        //$scope.messageJSON = [{"_id":"55850ff9bcfbd5610e04f4f5","message":"123","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T12:38:45.201Z","isPublic":false,"__v":0,"width":100,"height":100,"z":10,"y":10,"x":10}];
+                    });
+                console.log("refresh note from server");
+            })
+            .error(function (response) {
+                console.log("failed");
+            });
+
+    };
+
     $scope.persistMessage = function (message) {
         clearInterval(dict_commit_intervals[message._id]);
         dict_commit_intervals[message._id]=setInterval(commitRequest, 5000);
