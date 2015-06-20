@@ -5,22 +5,26 @@ var multer = require('multer');
 var app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(multer());
 
-app.get('/:username/notes', function(req,res){
+app.get('/', function (req, res) {
+    res.send("Status: Up")
+});
+
+app.get('/user/:username/notes', function (req, res) {
     //TODO authorization to be done here...
 
     var username = req.params.username;
     console.log("receive a get request " + username);
 
-    Note.find({username:username},function(err,data){
-        if(err) return console.error(err);
+    Note.find({username: username}, function (err, data) {
+        if (err) return console.error(err);
         res.send(data);
     })
 });
 
-app.post('/:username/notes', function(req,res){
+app.post('/user/:username/notes', function (req, res) {
     var username = req.params.username;
     var message = req.body.message;
 
@@ -31,20 +35,41 @@ app.post('/:username/notes', function(req,res){
         byUser: username, //TODO fix this to allow adding by other user...
         lastUpdate: Date.now(),
         isPublic: false
-    }).save(function(err,data){
-            if(err) return console.error(err);
+    }).save(function (err, data) {
+            if (err) return console.error(err);
 
-            console.log("Posting data <"+data+"> to database");
+            console.log("Posting data <" + data + "> to database");
             res.send("Success");
         });
 });
 
-//app.update('/:username/notes/:noteId', function(req,res){
-//    var username = req.params.username;
-//    var noteId = req.params.noteId;
-//
-//    res.send("TODO update note "+noteId +"for user "+username);
-//});
+app.put('/user/:username/:id', function (req, res) {
+    var username = req.params.username;
+    var id = req.params.id;
+    var message = req.body.message;
+
+    Note.update({
+        username: username,
+        _id: id
+    }, {
+        message: message
+    }, function (err, data) {
+        if (err) return console.error(err);
+
+        res.send("Success");
+    });
+});
+
+app.delete('/user/:username/:id', function (req, res) {
+    var username = req.params.username;
+    var id = req.params.id;
+
+    Note.remove({username: username, _id: id}, function (err) {
+        if (err) return console.error(err);
+
+        res.send("Success");
+    });
+});
 
 app.listen(3000);
 
