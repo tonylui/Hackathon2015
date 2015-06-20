@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="/js/facebook.functions.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
@@ -54,62 +55,7 @@
 	    fjs.parentNode.insertBefore(js, fjs);
 	  }(document, 'script', 'facebook-jssdk'));
 	
-	   function updateUserInfo() {
-	    	var userInfo = document.getElementById('user-info');
-		    console.log('Welcome!  Fetching your information.... ');
-		    FB.api('/me', function(response) {
-		      console.log('Successful login for: ' + response.name);
-			  userInfo.innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name;
-		      document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
-		    });
-	  }
-	  function updateFriendInfo(){
-		    FB.api('/me/friends?limit=<?= $iLimit ?>', function(response) {
-		    	var result_holder = document.getElementById('result_friends');
-		    	var list_of_friends = document.getElementById('list_of_friends');
-	
-		    	var friend_data = response.data;
-		    	var results = '';
-				var friend_names = '';
-		    	for (var i = 0; i < friend_data.length; i++) {
-		    	       results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '/picture">' + friend_data[i].name + '</div>';
-					   friend_names += '<div id=\'name_\''+i+'>' + friend_data[i].name + '</div>'
-		    	}
-		        list_of_friend.innerHTML = '<h2>List of friend names</h2>' + friend_names;
-	
-		        result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
-		    	});
-	    }
-     function updateSearchOptions(event){
-    	 alert(event.which);
-    	 var key=event.which;
-    	 var search_input = document.getElementById('search_input');
-    	 var options[] = getListOfOptions(search_input.value+key);
-    	 var select_options = document.getElementById('select_options');
-    	 select_options.tyle.visibility = "visible";
-    	 for (var i = 0; i < options.length; i++){
-    		 var option = new Option(options[i], options[i]);
-    		 select_options.options[daySelect.options.length] = option;
-     	 }
-    	 select_options.onchange="updateSearchInput("+select_options.[select_options.selectedIndex].text")";
-    	 
-     }   
-     function getListOfOptions(match){
-    	 var list_of_friends[] = document.getElementById('list_of_friends');
-    	 var result[] = [];
-    	 for (var i = 0; i < list_of_friends.length; i++){
-    		 if (list_of_friends[i].contains(match)){
-    			 result[result.length] = list_of_friends[i];
-    		 }
-    	 }
-    	 return result;
-     }
-     function updateSearchInput(value){
-    	 var search_input = document.getElementById('search_input');
-    	 search_input.value = value;
-    	 var select_options = document.getElementById('select_options');
-    	 select_options.tyle.visibility = "hidden";
-     }
+	   
     </script>
 
 
@@ -129,9 +75,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         
-                        <form action="/search" method="get">
+                        <form id="search_form" action="/search" method="get">
                         	<input id="search_input" onkeypress="updateSearchOptions(event)" type="text" class="form-group" name="q" placeholder="Search Here"/>
-                         	<select id="select_options" style="display:none"></select>
                         </form>
                         
                     </li>
@@ -148,11 +93,6 @@
         </div>
 
         <div class="jumbotron">
-<<<<<<< HEAD
-                <div class="container">
-                    <h1>Hello, world!</h1>
-                </div>
-=======
 			<div ng-controller="messagesCtrl">
 				<div ng-repeat="message in messageJSON">
 					<div draggable ng-model="dragmodel" >
@@ -160,7 +100,6 @@
 					</div>
 				</div>
 			</div>
->>>>>>> 01b37e65ea75163234d79046508fd326e6ea8c8c
         </div>
 
         <div class="jumbotron">
