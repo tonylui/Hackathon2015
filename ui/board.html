@@ -12,6 +12,28 @@
 
     <!-- Bootstrap -->
     <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '1450937555212722',
+          xfbml      : true,
+          version    : 'v2.3'
+        });
+      };
+
+      (function(d, s, id){
+    	 var js, fjs = d.getElementsByTagName(s)[0];         
+         if (d.getElementById(id)) return;
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/ro_RO/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));    
+    function myFacebookLogin() {
+    	  FB.login(function(){}, {scope: 'publish_actions'});
+    	}
+    </script>
+    
 </head>
 <body ng-app="myApp" ng-init="user={'name':'tonylui'}">
 <div ng-controller="messagesCtrl">
@@ -19,7 +41,7 @@
         <div draggable style="background-color: aqua;width: 100px; height: 100px"><textarea>{{message.message}}</textarea></div>
     </div>
 </div>
-
+<button onclick="myFacebookLogin()">Login with Facebook</button>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery-1.11.3.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
