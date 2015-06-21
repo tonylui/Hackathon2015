@@ -9,7 +9,6 @@ function updateUserInfo() {
 		    });
 	  }
   function updateFriendInfo(){
-	  // use proper login permissions (not just mail)
 	    FB.api('/me/friends', function(response) {
 	    	var list_of_friends = document.getElementById('list_of_friends');
 

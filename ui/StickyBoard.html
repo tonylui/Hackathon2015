@@ -53,7 +53,7 @@
                         <form id="search_form" action="/search" method="get">
                             <input id="search_input" onkeypress="updateSearchOptions(event)" type="text" class="form-group"
                                    name="q" placeholder="Search Friends"/>
-                            <div class="fb-login-button" id="user-logo" data-max-rows="1" data-size="medium"
+                            <div class="fb-login-button" scope="public_profile, email, user_friends" id="user-logo" data-max-rows="1" data-size="medium"
                                  data-show-faces="false" data-auto-logout-link="true"></div>
                         </form>
                     </li>

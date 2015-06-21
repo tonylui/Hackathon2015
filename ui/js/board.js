@@ -39,7 +39,6 @@ function setUpFaceBookLogin(){
             updateUserInfo();
             updateFriendInfo();
         } else if (response.status === 'not_authorized') {
-
             document.getElementById('status').innerHTML = 'Please log into this app.';
         } else {
             document.getElementById('status').innerHTML = 'Please log into Facebook.';
