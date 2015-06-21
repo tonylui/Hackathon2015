@@ -3,7 +3,7 @@ function updateUserInfo() {
 		    console.log('Welcome!  Fetching your information.... ');
 		    FB.api('/me', function(response) {
 		      console.log('Successful login for: ' + response.name);
-			  userInfo.innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name;
+			  userInfo.innerHTML = '<div class=\'roundImage\' ><img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name + '</div>';
 			  loginFunction(response.id);
 		      document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
 		    });

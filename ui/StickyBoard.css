@@ -54,3 +54,15 @@ body {
     height: 130px;
 
 }
+
+.roundImage {
+            display:block;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            overflow: hidden;
+            padding:5px 4px;
+        }
+.roundImage img {
+    width: 45px;
+}
