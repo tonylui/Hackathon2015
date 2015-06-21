@@ -5,7 +5,18 @@
 //var SERVER_URL = "http://52.74.226.158:3000";
 var SERVER_URL = "http://54.169.59.167:3000";
 
-var app = angular.module('myApp', ['freeDragger']);
+var app = angular.module('myApp', ['freeDragger', 'ngRoute'])
+    .config(function ($routeProvider, $locationProvider) {
+        //configure the routing rules here
+        $routeProvider.when('/user/:id', {
+            controller: 'messagesCtrl'
+        });
+
+        //routing DOESN'T work without html5Mode
+        $locationProvider.html5Mode({
+            enabled: true
+        });
+    });
 
 var persistMessage = function (message) {
     console.log(message._id);
@@ -77,9 +88,21 @@ function setUpFaceBookLogin(){
 var loginFunction;
 
 
-app.controller('messagesCtrl', function ($scope, $http) {
+app.controller('messagesCtrl', function ($rootScope, $scope, $http,  $routeParams, $route, $location) {
+    $scope.$route = $route;
+    $scope.$location = $location;
+    $scope.$routeParams = $routeParams;
+
+    $scope.currentUser = "";
+    $scope.searchedUser = "";
+
+    $scope.changePath = function(){
+        $location.path('/user/' + $scope.searchedUser);
+    };
+
+    //If you want to use URL attributes before the website is loaded
 	loginFunction = function(){
-    var username = "/user/" + $scope.user.name;
+    var username = "/user/" + $scope.currentUser;
     var api = "/notes";
     $http.get(SERVER_URL + username + api)
         .success(function (response) {
@@ -88,6 +111,14 @@ app.controller('messagesCtrl', function ($scope, $http) {
             //$scope.messageJSON = [{"_id":"55850ff9bcfbd5610e04f4f5","message":"123","username":"tonylui","byUser":"tonylui","lastUpdate":"2015-06-20T12:38:45.201Z","isPublic":false,"__v":0,"width":100,"height":100,"z":10,"y":10,"x":10}];
         });
 	};
+
+    $rootScope.$on('$routeChangeSuccess', function () {
+        console.log('route is changed');
+        console.log($routeParams.id);
+        $scope.currentUser = $routeParams.id;
+        loginFunction();
+    });
+
 	
 	setUpFaceBookLogin();
 
