@@ -96,13 +96,22 @@ app.controller('messagesCtrl', function ($rootScope, $scope, $http,  $routeParam
     $scope.currentUser = "";
     $scope.searchedUser = "";
 
+    $scope.loginUser = "";
+    $scope.boardUser = "";
+
     $scope.changePath = function(){
         $location.path('/user/' + $scope.searchedUser);
     };
 
     //If you want to use URL attributes before the website is loaded
 	loginFunction = function(){
-    var username = "/user/" + $scope.currentUser;
+        var username;
+        if($scope.currentUser){
+            username = "/user/" + $scope.currentUser;
+        }else{
+            username = "/user/" + fb_username;
+        }
+
     var api = "/notes";
     $http.get(SERVER_URL + username + api)
         .success(function (response) {
@@ -153,6 +162,13 @@ app.controller('messagesCtrl', function ($rootScope, $scope, $http,  $routeParam
         dict_commit_intervals[message._id]=setInterval(commitRequest, 5000);
 
         function commitRequest() {
+            var username;
+            if($scope.currentUser){
+                username = "/user/" + $scope.currentUser;
+            }else{
+                username = "/user/" + fb_username;
+            }
+
             console.log(message._id);
             console.log(message.message);
             var api = "/" + message._id;

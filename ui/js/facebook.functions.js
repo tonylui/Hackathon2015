@@ -1,3 +1,5 @@
+var fb_username = "";
+
 function updateUserInfo() {
 	    	var userInfo = document.getElementById('user-info');
 		    console.log('Welcome!  Fetching your information.... ');
@@ -6,6 +8,8 @@ function updateUserInfo() {
 			  userInfo.innerHTML = '<div class=\'roundImage\' ><img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name + '</div>';
 			  loginFunction(response.id);
 		      document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+
+                fb_username = response.id;
 		    });
 	  }
   function updateFriendInfo(){
